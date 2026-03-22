@@ -1,0 +1,103 @@
+{
+  "tables": {
+    "users": {
+      "name": "users",
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "INT",
+          "unique": true
+        },
+        {
+          "name": "name",
+          "data_type": "TEXT",
+          "unique": false
+        },
+        {
+          "name": "age",
+          "data_type": "INT",
+          "unique": false
+        },
+        {
+          "name": "active",
+          "data_type": "BOOL",
+          "unique": false
+        }
+      ],
+      "rows": [
+        {
+          "id": 1,
+          "name": "Alice",
+          "age": 31,
+          "active": true
+        },
+        {
+          "id": 3,
+          "name": "Charlie",
+          "age": 35,
+          "active": true
+        }
+      ],
+      "unique_indexes": {
+        "id": [
+          1,
+          3
+        ]
+      },
+      "indexes": {
+        "idx_users_name": {
+          "column": "name"
+        }
+      }
+    },
+    "products": {
+      "name": "products",
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "INT",
+          "unique": true
+        },
+        {
+          "name": "name",
+          "data_type": "TEXT",
+          "unique": false
+        },
+        {
+          "name": "price",
+          "data_type": "INT",
+          "unique": false
+        }
+      ],
+      "rows": [
+        {
+          "id": 1,
+          "name": "Laptop",
+          "price": 1000
+        },
+        {
+          "id": 2,
+          "name": "Mouse",
+          "price": 75
+        },
+        {
+          "id": 3,
+          "name": "Keyboard",
+          "price": 150
+        }
+      ],
+      "unique_indexes": {
+        "id": [
+          1,
+          2,
+          3
+        ]
+      },
+      "indexes": {
+        "idx_products_price": {
+          "column": "price"
+        }
+      }
+    }
+  }
+}
