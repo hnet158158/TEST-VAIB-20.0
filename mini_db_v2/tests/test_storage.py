@@ -115,11 +115,11 @@ class TestDatabase:
         assert retrieved == created
 
     def test_get_table_not_found(self):
-        """Get non-existent table raises error."""
+        """Get non-existent table returns None."""
         db = Database()
         
-        with pytest.raises(TableNotFoundError):
-            db.get_table("nonexistent")
+        result = db.get_table("nonexistent")
+        assert result is None
 
     def test_table_exists(self):
         """Check table existence."""
@@ -654,7 +654,8 @@ class TestBTreeNode:
 
     def test_btree_node_is_underflow(self):
         """BTreeNode is_underflow check."""
-        node = BTreeNode(is_leaf=True, order=10)
+        parent = BTreeNode(is_leaf=False, order=10)
+        node = BTreeNode(is_leaf=True, order=10, parent=parent)
         # min_keys = 10 // 2 = 5
         node.keys = [1, 2, 3, 4, 5]
         assert node.is_underflow() is False

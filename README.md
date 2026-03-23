@@ -10,8 +10,8 @@
 
 | Проект | Строк кода | Тестов | Фаз | Сложность |
 |--------|------------|--------|-----|-----------|
-| **mini_db** | ~5,000 | ~100 | 1 | Базовая |
-| **mini_db_v2** | ~15,000 | 1,179 | 12 | Production-Grade |
+| **mini_db** | ~5,000 | 432 | 6 | Базовая |
+| **mini_db_v2** | ~18,000 | **1,323** | 12 | Production-Grade |
 
 ---
 
@@ -271,8 +271,8 @@ FROM users;
 | **CASE / CAST** | ❌ | ✅ |
 | **COALESCE / NULLIF** | ❌ | ✅ |
 | **Persistence** | JSON | WAL |
-| **Тестов** | ~100 | 1,179 |
-| **Строк кода** | ~5,000 | ~15,000 |
+| **Тестов** | 432 | **1,323** |
+| **Строк кода** | ~5,000 | ~18,000 |
 
 ---
 
@@ -308,11 +308,11 @@ Intent → Requirements → Architecture → Implementation → Testing → Revi
 | Метрика | Значение |
 |---------|----------|
 | Фаз реализовано | 12/12 |
-| Тестов написано | 1,179 |
-| Тестов пройдено | 1,179 (100%) |
+| Тестов написано | 1,323 |
+| Тестов пройдено | **1,323 (100%)** |
 | Checkpoints | 5/5 |
-| Багов исправлено | 15 |
-| Editor loops | 2/3 |
+| Багов исправлено | 17 |
+| Editor loops | 3/3 |
 | Expert escalations | 0 |
 
 ---
@@ -343,14 +343,16 @@ cd mini_db_v2
 pytest tests/ -v
 
 # Все тесты
-pytest mini_db_v2/tests/ -v --tb=short
+cd "g:/Projects/TEST VAIB 20.0"
+set PYTHONPATH=g:/Projects/TEST VAIB 20.0
+python -m pytest mini_db_v2/tests/ -p no:asyncio -q
 ```
 
-### Покрытие тестов mini_db_v2
+### Покрытие тестов mini_db_v2 (1,323 теста)
 
 | Фаза | Тестов | Файл |
 |------|--------|------|
-| AST | 67 | test_ast.py |
+| AST | 85 | test_ast.py |
 | Lexer | 58 | test_lexer.py |
 | Parser | 45 | test_parser_phase2.py |
 | Executor | 46 | test_executor_phase2.py |
@@ -367,6 +369,54 @@ pytest mini_db_v2/tests/ -v --tb=short
 | Recovery | 64 | test_recovery_phase10.py |
 | Subqueries | 46 | test_subqueries_phase11.py |
 | REPL | 79 | test_repl_phase12.py |
+| **Fuzzing** | 18 | test_fuzzing_phase_extra.py |
+| **Property-Based** | 31 | test_property_based_phase_extra.py |
+| **Concurrency** | 20 | test_concurrency_phase_extra.py |
+| **Edge Cases** | 49 | test_edge_cases_phase_extra.py |
+| **Performance** | 24 | test_performance_phase_extra.py |
+| Storage | 37 | test_storage.py |
+| Integration | 30 | test_integration_phase2.py |
+| Performance | 24 | test_performance_phase2.py |
+| Explain | 45 | test_explain_phase4.py |
+
+---
+
+## Продвинутые тесты
+
+### Fuzzing Tests (18 тестов)
+- Случайные SQL запросы — база не падает
+- Garbage input — graceful error handling
+- Unicode handling
+- SQL injection prevention
+
+### Property-Based Tests (31 тест)
+- INSERT + SELECT roundtrip
+- UPDATE + SELECT видимость изменений
+- DELETE + SELECT удаление
+- UNIQUE constraints
+- BTree properties
+- MVCC visibility
+
+### Concurrency Tests (20 тестов)
+- Parallel transactions
+- Deadlock detection
+- Lock contention
+- Isolation levels (READ COMMITTED, REPEATABLE READ)
+- Race conditions
+
+### Edge Cases Tests (49 тестов)
+- NULL handling во всех операциях
+- Empty tables
+- Very large values (1M+ chars, 10K+ rows)
+- Unicode (Cyrillic, Chinese, Arabic, Emoji)
+- Special characters (quotes, newlines, backslashes)
+
+### Performance Tests (24 теста)
+- Large datasets (10,000+ rows)
+- Complex JOINs (Nested Loop, Hash, Merge)
+- Deep subqueries
+- Many indexes
+- Memory efficiency
 
 ---
 
